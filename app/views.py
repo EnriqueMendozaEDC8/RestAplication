@@ -40,6 +40,18 @@ class getMovieActors(APIView):
         except:
             return Response({"data":{"menssage":"Los datos enviados son incorrectos","request":request.data}})
 
+class getActorMovies(APIView):
+    def get(self,request):
+        return Response("este es un metodo post")
+    def post(self,request):
+        try:
+            actorToFind = request.data["id"]
+            queryset = Actors.objects.filter(id=actorToFind)
+            queryset = MovieActors.objects.filter(actor=queryset[0].id).values('actor__name','movie__id','movie__name','movie__poster','movie__premieredate','movie__genre__name')
+            return Response({"data":list(queryset)})
+        except:
+            return Response({"data":{"menssage":"Los datos enviados son incorrectos","request":request.data}})
+
 class getActors(APIView):
     def get(self,request):
         return Response("this is my menssage")
