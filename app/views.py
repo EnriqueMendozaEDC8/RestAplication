@@ -28,18 +28,15 @@ class MovieActorsViewSet(viewsets.ModelViewSet):
     queryset = MovieActors.objects.all()
     serializer_class = MovieActorsSerializer
 
-class getActorsMovie(APIView):
+class getMovieActors(APIView):
     def get(self,request):
         return Response("este es un metodo post")
     def post(self,request):
         try:
-            movieToFind = request.data["name"]
-            queryset = Movie.objects.filter(name=movieToFind)
-            queryset = MovieActors.objects.filter(movie=queryset[0].id)
-            response = []
-            for data in queryset:
-                response.append({"movie":data.movie.name,"actor":data.actor.name})
-            return Response({"data":response})
+            movieToFind = request.data["id"]
+            queryset = Movie.objects.filter(id=movieToFind)
+            queryset = MovieActors.objects.filter(movie=queryset[0].id).values('movie__name','actor__id','actor__name','actor__photo','actor__birthdate')
+            return Response({"data":list(queryset)})
         except:
             return Response({"data":{"menssage":"Los datos enviados son incorrectos","request":request.data}})
 
@@ -48,23 +45,23 @@ class getActors(APIView):
         return Response("this is my menssage")
     def post(self,request):
         try:
-            if existParam(request.data,'name'):
-                queryset = Actors.objects.filter(name = request.data["name"]).values('name','photo','birthdate')
+            if existParam(request.data,'id'):
+                queryset = Actors.objects.filter(id = request.data["id"]).values('id','name','photo','birthdate')
             else:
-                queryset = Actors.objects.all().values('name','photo','birthdate')  
+                queryset = Actors.objects.all().values('id','name','photo','birthdate')  
             return Response({"data":list(queryset)})
         except:
             return Response({"data":{"menssage":"Los datos enviados son incorrectos","request":request.data}})
             
-class getActors(APIView):
+class getMovies(APIView):
     def get(self,request):
         return Response("this is my menssage")
     def post(self,request):
         try:
-            if existParam(request.data,'name'):
-                queryset = Actors.objects.filter(name = request.data["name"]).values('name','photo','birthdate')
+            if existParam(request.data,'id'):
+                queryset = Movie.objects.filter(id = request.data["id"]).values('id','name','poster','genre__name','premieredate')
             else:
-                queryset = Actors.objects.all().values('name','photo','birthdate')  
+                queryset = Movie.objects.all().values('id','name','poster','genre__name','premieredate')  
             return Response({"data":list(queryset)})
         except:
             return Response({"data":{"menssage":"Los datos enviados son incorrectos","request":request.data}})

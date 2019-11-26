@@ -7,18 +7,16 @@ class GenreAdmin(admin.ModelAdmin):
     search_fields = ('name','infogenre')
 
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ('name','cartel','genre')
-    search_fields = ('name','cartel','genre')
+    list_display = ('name','poster','genre','premieredate')
+    search_fields = ('name','poster','genre','premieredate')
 
 class ActorsAdmin(admin.ModelAdmin):
-    list_display = ('name','photo','birthdate')
-    search_fields = ('name','photo','birthdate')
+    list_display = ('name','birthdate')
+    search_fields = ('name','birthdate')
 
 class MovieActorsAdmin(admin.ModelAdmin):
     list_display = ('movie','actor')
     search_fields = ('movie','actor')
-
-
 
 admin.site.register(Genre,GenreAdmin)
 admin.site.register(Movie,MovieAdmin)

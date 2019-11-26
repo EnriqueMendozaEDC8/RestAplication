@@ -10,14 +10,15 @@ class Genre(models.Model):
         
 class Movie(models.Model):
     name = models.TextField()
-    cartel = models.ImageField(upload_to='images/')
+    poster = models.URLField()
+    premieredate = models.DateField(default=datetime.date.today)
     genre = models.ForeignKey(Genre,on_delete = models.CASCADE)
     def __str__(self):
         return self.name
 
 class Actors(models.Model):
     name = models.TextField()
-    photo = models.ImageField(upload_to='images/')
+    photo = models.TextField()
     birthdate = models.DateField(default=datetime.date.today)
     def __str__(self):
         return self.name

@@ -12,7 +12,7 @@ class GenreSerializer(serializers.HyperlinkedModelSerializer):
 class MovieSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Movie
-        fields = ['name','cartel','genre']
+        fields = ['name','poster','genre']
 
 class ActorsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
