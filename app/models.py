@@ -9,7 +9,7 @@ class Genre(models.Model):
         return self.name
         
 class Movie(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=255)
     poster = models.URLField()
     premieredate = models.DateField(default=datetime.date.today)
     genre = models.ForeignKey(Genre,on_delete = models.CASCADE)
@@ -17,7 +17,7 @@ class Movie(models.Model):
         return self.name
 
 class Actors(models.Model):
-    name = models.TextField()
+    name = models.CharField(max_length=255)
     photo = models.TextField()
     birthdate = models.DateField(default=datetime.date.today)
     def __str__(self):
